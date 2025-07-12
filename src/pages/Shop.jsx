@@ -5,8 +5,11 @@ import Button from "../layouts/Button";
 import { db } from "../firebase/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { Link } from "react-router";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cart";
 
 const Shop = () => {
+  const dispatch= useDispatch()
   const [products, setProducts] = useState([])
 
   const productsCollectionRef= collection(db, "products")
@@ -38,13 +41,8 @@ const Shop = () => {
         </h2>
         <Flex className="md:justify-start justify-center text-center md:text-left md:gap-y-0 gap-y-10 gap-x-[20px]">
           {products.map((product) => (
-            <div className="card w-full md:w-[295px]">
+            <div className="card shadow-sm p-3 rounded-[10px] w-full md:w-[295px]">
               <div
-                // style={{
-                //   backgroundImage: `url(${product.img})`,
-                //   backgroundSize: "cover",
-                //   backgroundPosition: "center",
-                // }}
               >
                 <figure>
                   <img className="img mb-[16px] object-cover rounded-[20px] w-full h-[298px] bg-[#F0EEED]" src={product.image}/>
@@ -58,6 +56,7 @@ const Shop = () => {
               <p className="text-subtitle-sm md:text-subtitle font-bold">
                 {product.price}
               </p>
+              <button className="cursor-pointer mt-2 bg-black rounded-[20px] text-white px-5 py-3" onClick={()=>dispatch(addToCart(product))}>Add To Cart</button>
             </div>
           ))}
         </Flex>

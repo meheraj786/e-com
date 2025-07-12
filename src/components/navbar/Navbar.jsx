@@ -7,6 +7,7 @@ import { IoMdMenu } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import Flex from '../../layouts/Flex';
 import Container from '../../layouts/Container';
+import { Link } from 'react-router';
 
 
 
@@ -37,9 +38,9 @@ const Navbar = () => {
     <div className="navbar sticky top-0 left-0 z-[9999] font-secondary py-[24px] text-black bg-white shadow-2xl">
       <Container>
         <Flex className='gap-x-10'>
-          <div className="logo">
+          <Link to="/" className="logo">
             E-Com
-          </div>
+          </Link>
           <ul className=' hidden md:block'>
             <Flex className="gap-x-6">
               {
@@ -55,15 +56,12 @@ const Navbar = () => {
           </div>
           <div className="icons hidden md:block">
             <Flex className="gap-x-[15px]">
-            <FiShoppingCart className='text-[24px]' />
+            <Link to="/cart" className="cursor-pointer">
+              <FiShoppingCart className='text-[24px] ' />
+                </Link>
             <RxAvatar className='text-[24px]' />
             </Flex>
           </div>
-
-        
-
-
-          
           {show ? <IoMdClose onClick={()=>setShow(false)} className='text-[26px]'/> : <IoMdMenu onClick={()=>setShow(true)} className='text-[26px] md:hidden'/>}
           
 
@@ -87,7 +85,9 @@ const Navbar = () => {
             </div>
             <div className="icons md:hidden">
               <Flex className="gap-x-[15px]">
-              <FiShoppingCart className='text-[24px]' />
+                <Link to="/cart" className="cursor-pointer">
+              <FiShoppingCart className='text-[24px] ' />
+                </Link>
               <RxAvatar className='text-[24px]' />
               </Flex>
             </div>
