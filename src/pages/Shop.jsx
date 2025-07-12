@@ -1,101 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../layouts/Container";
 import Flex from "../layouts/Flex";
 import Button from "../layouts/Button";
 import { db } from "../firebase/firebase";
 import { getDocs, collection } from "firebase/firestore";
+import { Link } from "react-router";
 
 const Shop = () => {
-  const products = [
-    {
-      img: "",
-      name: "Red T-Shirt",
-      catagory: "topSelling",
-      collection: "casual",
-      rating: "4/5",
-      price: "$200",
-    },
-    {
-      img: "",
-      name: "Yellow Hoody",
-      catagory: "topSelling",
-      collection: "casual",
-      rating: "4/5",
-      price: "$250",
-    },
-    {
-      img: "",
-      name: "White T-Shirt",
-      catagory: "normal",
-      collection: "casual",
-      rating: "4/5",
-      price: "$200",
-    },
-    {
-      img: "",
-      name: "Standard Blezer",
-      catagory: "topSelling",
-      collection: "formal",
-      rating: "4/5",
-      price: "$400",
-    },
-    {
-      img: "",
-      name: "Bag",
-      catagory: "normal",
-      collection: "party",
-      rating: "4/5",
-      price: "$250",
-    },
-    {
-      img: "",
-      name: "Snow-White T-Shirt",
-      catagory: "topSelling",
-      collection: "casual",
-      rating: "4/5",
-      price: "$200",
-    },
-    {
-      img: "",
-      name: "Basket Ball Outfit",
-      catagory: "newArrivals",
-      collection: "sports",
-      rating: "4/5",
-      price: "$500",
-    },
-    {
-      img: "",
-      name: "Snow Outfit",
-      catagory: "newArrivals",
-      collection: "sports",
-      rating: "4/5",
-      price: "$200",
-    },
-    {
-      img: "",
-      name: "Borthday Outfit",
-      catagory: "newArrivals",
-      collection: "party",
-      rating: "4/5",
-      price: "$200",
-    },
-    {
-      img: "",
-      name: "Gym T-Shirt",
-      catagory: "newArrivals",
-      collection: "gym",
-      rating: "4/5",
-      price: "$100",
-    },
-    {
-      img: "",
-      name: "Yellow Gym T-Shirt",
-      catagory: "normal",
-      collection: "gym",
-      rating: "4/5",
-      price: "$300",
-    },
-  ];
+  const [products, setProducts] = useState([])
+
   const productsCollectionRef= collection(db, "products")
 
   useEffect(() => {
@@ -103,38 +16,43 @@ const Shop = () => {
       const data= await getDocs(productsCollectionRef)
       const filterData= data.docs.map((doc)=>(
         {
+          id: doc.id,
           ...doc.data()
         }
       ))
-      console.log(filterData);
+      setProducts(filterData)
       
     }
     getProducts()
   }, [])
   
 
-  const topSellingProducts = products.filter(
-    (product) => product.catagory == "topSelling"
-  );
+  // const topSellingProducts = products.filter(
+  //   (product) => product.catagory == "topSelling"
+  // );
   return (
     <div className="py-[70px] font-secondary">
       <Container>
         <h2 className="text-subheading-sm md:text-subheading font-black text-center mb-[55px]">
-          Top Selling
+          Products
         </h2>
         <Flex className="md:justify-start justify-center text-center md:text-left md:gap-y-0 gap-y-10 gap-x-[20px]">
-          {topSellingProducts.map((product) => (
+          {products.map((product) => (
             <div className="card w-full md:w-[295px]">
               <div
-                className="img mb-[16px] rounded-[20px] w-full h-[298px] bg-[#F0EEED]"
-                style={{
-                  backgroundImage: `url(${product.img})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              ></div>
+                // style={{
+                //   backgroundImage: `url(${product.img})`,
+                //   backgroundSize: "cover",
+                //   backgroundPosition: "center",
+                // }}
+              >
+                <figure>
+                  <img className="img mb-[16px] object-cover rounded-[20px] w-full h-[298px] bg-[#F0EEED]" src={product.image}/>
+                </figure>
+              </div>
+              
               <h4 className="text-subtitle-sm md:text-subtitle font-bold">
-                {product.name}
+                {product.title}
               </h4>
               <span className="my-[8px]">{product.rating}</span>
               <p className="text-subtitle-sm md:text-subtitle font-bold">
