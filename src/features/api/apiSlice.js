@@ -1,43 +1,43 @@
-import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
-export const apiSlice= createApi({
+export const apiSlice = createApi({
   reducerPath: "api",
   tagTypes: ["products"],
   baseQuery: fakeBaseQuery(),
-  endpoints: (builder)=>({
+  endpoints: (builder) => ({
     getAllProducts: builder.query({
-      async queryFn(){
+      async queryFn() {
         try {
-            const productsCollectionRef = collection(db, "products");
-            const data = await getDocs(productsCollectionRef);
-            const filterData= data.map((doc)=>({
-              id: doc.id,
-              ...doc.data()
-            }))
-            return {data: filterData, error: null}
+          const productsCollectionRef = collection(db, "products");
+          const data = await getDocs(productsCollectionRef);
+          
+          const filterData = data.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          return { data: filterData };
         } catch (error) {
           console.log(error.message);
-          return {data: null, error: error.message}
-          
+          return { error: error.message };
         }
       },
-      providesTags: ["products"]
+      providesTags: ["products"],
     }),
+
     addProduct: builder.mutation({
-      queryFn: async (product)=>{
+      async queryFn(product) {
         try {
-          await addDoc(collection(db, 'products', product))
-          return { data: product}
+          await addDoc(collection(db, "products"), product);
+          return { data: product };
         } catch (error) {
-          console.log(error);
+          return { error: error.message };
         }
       },
-      invalidatesTags: ["products"]
-    })
-  })
-})
+      invalidatesTags: ["products"],
+    }),
+  }),
+});
 
-
-export const { useGetAllProductsQuery, useAddProductMutation }= apiSlice;
+export const { useGetAllProductsQuery, useAddProductMutation } = apiSlice;

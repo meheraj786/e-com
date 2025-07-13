@@ -13,7 +13,11 @@ import { useGetAllProductsQuery } from "../features/api/apiSlice";
 const Shop = () => {
   const dispatch = useDispatch();
   // const [products, setProducts] = useState([]);
-  const { data: products}= useGetAllProductsQuery()
+  const { data: products, isLoading, error } = useGetAllProductsQuery();
+
+if (isLoading) return <p className="text-center">Loading...</p>;
+if (error) return <p className="text-center text-red-500">Something went wrong.</p>;
+
 
   // const productsCollectionRef = collection(db, "products");
 
@@ -50,6 +54,7 @@ const Shop = () => {
                   />
                 </figure>
               </div>
+              <span className="text-gray-400">{product.category}</span>
 
               <h4 className="text-subtitle-sm md:text-subtitle font-bold">
                 {product.title}
