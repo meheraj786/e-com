@@ -11,6 +11,8 @@ import Shop from './pages/Shop.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Navbar from './components/navbar/Navbar.jsx'
 import Login from './pages/Login.jsx'
+import { AuthProvider } from './contexts/Auth.jsx'
+import PrivateRoute from './components/privateRoute/PrivateRoute.jsx'
 
 const router = createBrowserRouter([
   { path: "/", Component: Navbar,
@@ -21,18 +23,20 @@ const router = createBrowserRouter([
       {
         path: "/shop", Component: Shop
       },
-      { path: "/cart", Component: Cart },
+      { path: "/cart", element: <PrivateRoute> <Cart/> </PrivateRoute> },
       { path: "/signup", Component: SignUp },
       { path: "/login", Component: Login },
     ]
-   },
+  },
   
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store= {store}>
+      <AuthProvider>
     <RouterProvider router={router} />
+      </AuthProvider>
     </Provider>
   </StrictMode>,
 )
