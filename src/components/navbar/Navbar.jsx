@@ -11,6 +11,7 @@ import { Link, Outlet } from "react-router";
 import { useAuth } from "../../contexts/Auth";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
@@ -36,9 +37,11 @@ const Navbar = () => {
   const { userLoggedIn, role } = useAuth();
   const signOutHandler = () => {
     signOut(auth);
+    toast.success("SignUp Successfull")
   };
   return (
     <>
+    <Toaster position="top-right" reverseOrder={false} />
       {showBar && (
         <div className="bar py-[9px] font-secondary text-white bg-black text-center">
           <Container>
@@ -96,7 +99,7 @@ const Navbar = () => {
                     </Link>
                   </>
                 )}
-                {userLoggedIn && (
+                {userLoggedIn && role==='user' && (
                   <>
                     <button
                       className="text-[16px] cursor-pointer "
@@ -105,12 +108,20 @@ const Navbar = () => {
                       SignOut
                     </button>
                     <RxAvatar className="text-[24px]" />
-                    {userLoggedIn && role === "admin" && (
-                      <Link to="/dashboard">
-                        <RxAvatar className="text-[24px] text-red-500" />
-                      </Link>
-                    )}
                   </>
+                )}
+                {userLoggedIn && role === "admin" && (<>
+                  <button
+                      className="text-[16px] cursor-pointer "
+                      onClick={signOutHandler}
+                    >
+                      SignOut
+                    </button>
+                  <Link to="/dashboard">
+                    <RxAvatar className="text-[24px] text-red-500" />
+                  </Link>
+                
+                </>
                 )}
               </Flex>
             </div>
