@@ -7,7 +7,7 @@ import { IoMdMenu } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import Flex from '../../layouts/Flex';
 import Container from '../../layouts/Container';
-import { Link } from 'react-router';
+import { Link, Outlet } from 'react-router';
 
 
 
@@ -16,7 +16,24 @@ import { Link } from 'react-router';
 const Navbar = () => {
   const [show, setShow]= useState(false)
   const [showBar, setShowBar]= useState(true)
-  const navItems=["Shop", 'On Sale', 'New Arrivals', 'Brands']
+  // const navItems=["Shop", 'On Sale', 'New Arrivals', 'Brands']
+  const navItems=[{
+    name: "Shop",
+    link: "/shop"
+  },
+  {
+    name: "On Sale",
+    link: "/shop"
+  },
+  {
+    name: "New Arrivals",
+    link: "/shop"
+  },
+  {
+    name: "Brands",
+    link: "/shop"
+  },
+]
   return (
     <>
     {
@@ -45,7 +62,10 @@ const Navbar = () => {
             <Flex className="gap-x-6">
               {
                 navItems.map((item)=>(
-                  <li>{item}</li>
+                  <li>
+                    <Link to={item.link}>
+                    {item.name}</Link>
+                  </li>
                 ))
               }
             </Flex>
@@ -98,6 +118,8 @@ const Navbar = () => {
         </Flex>
       </Container>
     </div>
+    
+    <Outlet/>
     </>
   )
 }

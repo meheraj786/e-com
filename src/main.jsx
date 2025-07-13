@@ -8,14 +8,22 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Cart from './pages/Cart.jsx'
 import Home from './pages/Home.jsx'
 import Shop from './pages/Shop.jsx'
+import SignUp from './pages/SignUp.jsx'
+import Navbar from './components/navbar/Navbar.jsx'
+import Login from './pages/Login.jsx'
 
 const router = createBrowserRouter([
-  { path: "/", Component: Home,
+  { path: "/", Component: Navbar,
     children:[
       {
-        index: true, Component: Shop
+        index: true, Component: Home
+      },
+      {
+        path: "/shop", Component: Shop
       },
       { path: "/cart", Component: Cart },
+      { path: "/signup", Component: SignUp },
+      { path: "/login", Component: Login },
     ]
    },
   

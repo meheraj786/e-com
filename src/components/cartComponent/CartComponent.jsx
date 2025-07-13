@@ -7,8 +7,6 @@ const CartComponent = ({cartItems, total}) => {
   const dispatch= useDispatch()
 
 
-
-
   return (
 <>
       <div className="overflow-x-auto">
