@@ -79,6 +79,7 @@ const Navbar = () => {
             <Link to="/cart" className="cursor-pointer">
               <FiShoppingCart className='text-[24px] ' />
                 </Link>
+                <Link className='text-[16px] ' to="/signup">SignUp</Link>
             <RxAvatar className='text-[24px]' />
             </Flex>
           </div>

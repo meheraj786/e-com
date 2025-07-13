@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { auth, db } from "../firebase/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { doc, setDoc } from "firebase/firestore";
+import toast, { Toaster } from "react-hot-toast";
+import { PropagateLoader } from "react-spinners";
 
 const SignUp = () => {
+  const navigate= useNavigate()
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -45,6 +48,20 @@ const SignUp = () => {
         password: "",
       });
       setErrmsg("");
+      toast.success('Signup Successfully done',
+  {
+    style: {
+      duration: 2000,
+      borderRadius: '10px',
+      background: '#333',
+      color: '#fff',
+    },
+  }
+);
+      setTimeout(()=>{
+        navigate("/login")
+      },2000)
+
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -53,6 +70,7 @@ const SignUp = () => {
   };
   return (
     <div className="mt-[10%] flex items-center justify-center bg-white text-black font-primary px-4">
+            <Toaster position="bottom-center" reverseOrder={false} />
       <div className="w-full max-w-md border border-black p-8 rounded-md shadow-md">
         <h2
           className="text-center mb-6 tracking-wider uppercase"
@@ -121,8 +139,8 @@ const SignUp = () => {
               />
             )}
           </div>
-
-          <button
+{
+  isLoading ? <PropagateLoader className="w-full py-2 text-center" /> : <button
             onClick={submitHandler}
             type="submit"
             className="w-full bg-black text-white py-2 uppercase tracking-wider hover:bg-white cursor-pointer hover:text-black hover:border hover:border-black transition-all"
@@ -133,6 +151,9 @@ const SignUp = () => {
           >
             Create Account
           </button>
+}
+          
+          
         </div>
 
         <p className="text-center text-sm text-gray-600 mt-4">
