@@ -8,24 +8,26 @@ import { Link } from "react-router";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart";
 import toast, { Toaster } from "react-hot-toast";
+import { useGetAllProductsQuery } from "../features/api/apiSlice";
 
 const Shop = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
+  const { data: products}= useGetAllProductsQuery()
 
-  const productsCollectionRef = collection(db, "products");
+  // const productsCollectionRef = collection(db, "products");
 
-  useEffect(() => {
-    const getProducts = async () => {
-      const data = await getDocs(productsCollectionRef);
-      const filterData = data.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setProducts(filterData);
-    };
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     const data = await getDocs(productsCollectionRef);
+  //     const filterData = data.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     setProducts(filterData);
+  //   };
+  //   getProducts();
+  // }, []);
 
   // const topSellingProducts = products.filter(
   //   (product) => product.catagory == "topSelling"

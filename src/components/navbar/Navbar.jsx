@@ -15,7 +15,6 @@ import { auth } from "../../firebase/firebase";
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const [showBar, setShowBar] = useState(true);
-  // const navItems=["Shop", 'On Sale', 'New Arrivals', 'Brands']
   const navItems = [
     {
       name: "Shop",
@@ -86,14 +85,17 @@ const Navbar = () => {
                     <FiShoppingCart className="text-[24px] " />
                   </Link>
                 )}
-{
-  !userLoggedIn && (
-    <>
-      <Link className='text-[16px] ' to="/signup">SignUp</Link>|
-      <Link className='text-[16px] ' to="/login">login</Link>
-    </>
-  )
-}
+                {!userLoggedIn && (
+                  <>
+                    <Link className="text-[16px] " to="/signup">
+                      SignUp
+                    </Link>
+                    |
+                    <Link className="text-[16px] " to="/login">
+                      login
+                    </Link>
+                  </>
+                )}
                 {userLoggedIn && (
                   <>
                     <button
@@ -103,6 +105,11 @@ const Navbar = () => {
                       SignOut
                     </button>
                     <RxAvatar className="text-[24px]" />
+                    {userLoggedIn && role === "admin" && (
+                      <Link to="/dashboard">
+                        <RxAvatar className="text-[24px] text-red-500" />
+                      </Link>
+                    )}
                   </>
                 )}
               </Flex>
