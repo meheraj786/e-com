@@ -12,10 +12,15 @@ import { useAuth } from "../../contexts/Auth";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const [showBar, setShowBar] = useState(true);
+  const cart= useSelector((state)=>state.cart)
+  console.log(cart.length);
+  
+  
   const navItems = [
     {
       name: "Shop",
@@ -41,7 +46,7 @@ const Navbar = () => {
   };
   return (
     <>
-    <Toaster position="top-right" reverseOrder={false} />
+    <Toaster position="bottom-right" reverseOrder={false} />
       {showBar && (
         <div className="bar py-[9px] font-secondary text-white bg-black text-center">
           <Container>
@@ -84,8 +89,12 @@ const Navbar = () => {
             <div className="icons hidden md:block">
               <Flex className="gap-x-[15px]">
                 {userLoggedIn && (
-                  <Link to="/cart" className="cursor-pointer">
-                    <FiShoppingCart className="text-[24px] " />
+                  <Link to="/cart" className="cursor-pointer relative">
+                    <FiShoppingCart className="text-[34px] " />
+                    {
+                      cart.length >0 && <span className="text-[12px] absolute -top-5 right-0 bg-black text-white rounded-full px-2 py-1">{cart.length}</span>
+                    }
+                    
                   </Link>
                 )}
                 {!userLoggedIn && (
