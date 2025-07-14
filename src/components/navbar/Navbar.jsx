@@ -18,7 +18,6 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const [showBar, setShowBar] = useState(true);
   const cart= useSelector((state)=>state.cart)
-  console.log(cart.length);
   
   
   const navItems = [
