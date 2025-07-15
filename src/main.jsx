@@ -16,6 +16,8 @@ import PrivateRoute from './components/privateRoute/PrivateRoute.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import AdminRoute from './components/privateRoute/AdminRoute.jsx'
 import Layout from './pages/Layout.jsx'
+import ProductListPage from './pages/ProductListPage.jsx'
+import ProductDetailPage from './pages/ProductDetailPage.jsx'
 
 const router = createBrowserRouter([
   { path: "/", Component: Layout,
@@ -29,6 +31,8 @@ const router = createBrowserRouter([
       { path: "/cart", element: <PrivateRoute> <Cart/> </PrivateRoute> },
       { path: "/signup", Component: SignUp },
       { path: "/login", Component: Login },
+      { path: "/products", Component: ProductListPage },
+      { path: "/product", Component: ProductDetailPage },
       { path: "/dashboard", element: <AdminRoute><Dashboard/></AdminRoute>    },
       { path: "/postproducts", element: <AdminRoute><PostProducts/> </AdminRoute>  },
     ]
