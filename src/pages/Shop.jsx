@@ -12,6 +12,8 @@ import ProductCardSkeleton from "../components/skeletons/ProductCardSkeleton";
 const Shop = () => {
   const dispatch = useDispatch();
   const { data: products, isLoading, error } = useGetAllProductsQuery();
+  console.log(products);
+  
 
 if (isLoading) return (
   <>
@@ -42,36 +44,37 @@ if (error) return <p className="text-center text-red-500">Something went wrong.<
         </h2>
         <Flex className="md:justify-start justify-center text-center md:text-left md:gap-y-0 gap-y-10 gap-x-[20px]">
           {products.map((product) => (
-            <div className="card shadow-sm p-3 rounded-[10px] w-full md:w-[295px]">
+            <div className="card h-[517px] shadow-sm p-3 rounded-[10px] w-full md:w-[295px]">
               <div>
                 <figure>
                   <img
-                    className="img mb-[16px] object-cover rounded-[20px] w-full h-[298px] bg-[#F0EEED]"
+                    className="img mb-[16px] object-cover rounded-[20px] w-full h-[250px] bg-[#F0EEED]"
                     src={product.image}
                   />
                 </figure>
               </div>
               <span className="text-gray-400">{product.category}</span>
 
-              <h4 className="text-subtitle-sm md:text-subtitle font-bold">
+<div className="h-[28%] w-full overflow-hidden">
+              <h3 className="text-[26px] truncate  font-bold">
                 {product.title}
-              </h4>
+              </h3>
               <span className="my-[8px]">{product.rating}</span>
               <p className="text-subtitle-sm md:text-subtitle font-bold">
                 {product.price}
               </p>
+              <p className="text-subtitle-sm md:text-subtitle line-clamp-2">
+                
+                {product.description}
+              </p>
+              
+              
+
+</div>
               <button
                 className="cursor-pointer mt-2 bg-black rounded-[20px] text-white px-5 py-3"
                 onClick={() => {
-                  dispatch(addToCart(product));
-                  toast.success("Product Successfully Added", {
-                    style: {
-
-                      borderRadius: "10px",
-                      background: "#000",
-                      color: "#fff",
-                    },
-                  });
+                  dispatch(addToCart(product));;
                 }}
               >
                 Add To Cart

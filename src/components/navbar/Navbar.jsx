@@ -178,7 +178,6 @@ const Navbar = () => {
         </Container>
       </div>
 
-      <Outlet />
     </>
   );
 };

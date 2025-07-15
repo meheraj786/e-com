@@ -1,7 +1,6 @@
 import React,{ StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
 import { Provider } from 'react-redux'
 import { store } from './app/store.js'
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -16,9 +15,10 @@ import { AuthProvider } from './contexts/Auth.jsx'
 import PrivateRoute from './components/privateRoute/PrivateRoute.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import AdminRoute from './components/privateRoute/AdminRoute.jsx'
+import Layout from './pages/Layout.jsx'
 
 const router = createBrowserRouter([
-  { path: "/", Component: Navbar,
+  { path: "/", Component: Layout,
     children:[
       {
         index: true, Component: Home
