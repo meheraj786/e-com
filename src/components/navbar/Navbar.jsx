@@ -46,7 +46,7 @@ const Navbar = () => {
   return (
     <>
     <Toaster position="bottom-right" reverseOrder={false} />
-      {showBar && (
+      {showBar && !userLoggedIn && (
         <div className="bar py-[9px] font-secondary text-white bg-black text-center">
           <Container>
             <Flex className="md:w-[66%] ms-auto">
@@ -91,7 +91,7 @@ const Navbar = () => {
                   <Link to="/cart" className="cursor-pointer relative">
                     <FiShoppingCart className="text-[34px] " />
                     {
-                      cart.length >0 && <span className="text-[12px] absolute -top-5 right-0 bg-black text-white rounded-full px-2 py-1">{cart.length}</span>
+                      cart.length >0 && <span className="text-[12px] absolute -top-4 -right-4 bg-black text-white rounded-full px-2 py-1">{cart.length}</span>
                     }
                     
                   </Link>
