@@ -1,135 +1,43 @@
 import React, { useState } from 'react';
-import { ChevronDown, Filter, Star, Heart } from 'lucide-react';
+import { ChevronDown, Filter, Star, Heart, Container } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useGetAllProductsQuery } from '../features/api/apiSlice';
+import { Toaster } from 'react-hot-toast';
+import Flex from '../layouts/Flex';
+import ProductCardSkeleton from '../components/skeletons/ProductCardSkeleton';
+import { MdAddShoppingCart } from 'react-icons/md';
+import CartButton from '../layouts/CartButton';
+import ProductCard from '../components/productCard/ProductCard';
 
-const ProductCard = ({ product, onWishlist }) => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
-
-  const handleWishlist = (e) => {
-    e.preventDefault();
-    setIsWishlisted(!isWishlisted);
-    onWishlist(product.id);
-  };
-
-  return (
-    <div className="bg-white rounded-lg overflow-hidden group">
-      <div className="relative bg-gray-100 aspect-square">
-        <img 
-          src={product.image} 
-          alt={product.name}
-          className="w-full h-full object-cover"
-        />
-        {product.discount && (
-          <div className="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
-            -{product.discount}%
-          </div>
-        )}
-      </div>
-      
-      <div className="p-4">
-        <h3 className="font-medium text-gray-800 mb-2 text-sm">{product.name}</h3>
-        
-        <div className="flex items-center mb-2">
-          {[...Array(5)].map((_, i) => (
-            <Star 
-              key={i} 
-              size={12} 
-              className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
-            />
-          ))}
-          <span className="text-xs text-gray-500 ml-2">{product.rating}/5</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-gray-900">${product.price}</span>
-          {product.originalPrice && (
-            <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
-          )}
-          {product.discount && (
-            <span className="text-xs text-red-500">-{product.discount}%</span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const ProductListPage = () => {
   const [priceRange, setPriceRange] = useState([0, 500]);
   const [selectedColors, setSelectedColors] = useState([]);
+  const dispatch = useDispatch();
+    const { data: products, isLoading, error } = useGetAllProductsQuery();
+  
+    if (isLoading)
+      return (
+        <>
+          <div className="py-[70px] font-secondary">
+            <Toaster position="bottom-center" reverseOrder={false} />
+            <Container>
+              <h2 className="text-subheading-sm md:text-subheading font-black text-center mb-[55px]">
+                Products
+              </h2>
+              <Flex className="md:justify-start justify-center text-center md:text-left md:gap-y-0 gap-y-10 gap-x-[20px]">
+                <ProductCardSkeleton />
+                <ProductCardSkeleton />
+                <ProductCardSkeleton />
+                <ProductCardSkeleton />
+              </Flex>
+            </Container>
+          </div>
+        </>
+      );
+    if (error)
+      return <p className="text-center text-red-500">Something went wrong.</p>;
 
-  // Sample product data - exact same as image
-  const products = [
-    {
-      id: 1,
-      name: "Gradient Graphic T-shirt",
-      price: 145,
-      rating: 4.5,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 2,
-      name: "Polo with Tipping Details",
-      price: 180,
-      rating: 4.5,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 3,
-      name: "Black Striped T-shirt",
-      price: 120,
-      originalPrice: 160,
-      discount: 20,
-      rating: 4.5,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 4,
-      name: "Skinny Fit Jeans",
-      price: 240,
-      originalPrice: 260,
-      discount: 20,
-      rating: 3.5,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 5,
-      name: "Checkered Shirt",
-      price: 180,
-      rating: 4.5,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 6,
-      name: "Sleeve Striped T-shirt",
-      price: 130,
-      originalPrice: 160,
-      discount: 30,
-      rating: 4.5,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 7,
-      name: "Vertical Striped Shirt",
-      price: 212,
-      originalPrice: 232,
-      rating: 5.0,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 8,
-      name: "Courage Graphic T-shirt",
-      price: 145,
-      rating: 4.0,
-      image: "/api/placeholder/300/300",
-    },
-    {
-      id: 9,
-      name: "Loose Fit Bermuda Shorts",
-      price: 80,
-      rating: 3.0,
-      image: "/api/placeholder/300/300",
-    }
-  ];
 
   const colors = [
     { name: 'Green', value: 'green', color: 'bg-green-500' },
@@ -151,9 +59,7 @@ const ProductListPage = () => {
     );
   };
 
-  const handleWishlist = (productId) => {
-    console.log('Added to wishlist:', productId);
-  };
+
 
   return (
     <div className="max-w-7xl mx-auto p-4">
@@ -305,11 +211,7 @@ const ProductListPage = () => {
           {/* Products Grid - 3 columns */}
           <div className="grid grid-cols-3 gap-4 mb-8">
             {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onWishlist={handleWishlist}
-              />
+<ProductCard product={product}/>
             ))}
           </div>
 
