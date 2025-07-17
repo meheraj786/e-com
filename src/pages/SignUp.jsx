@@ -34,7 +34,6 @@ const SignUp = () => {
       await updateProfile(res.user, {
         displayName: user.name,
       });
-      console.log(res.user.uid);
 
       await setDoc(doc(db, "users", res.user.uid), {
         name: res.user.displayName,

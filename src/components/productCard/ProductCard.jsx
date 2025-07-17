@@ -31,7 +31,6 @@ const ProductCard = ({product}) => {
         ((product.normalPrice - product.offeredPrice) / product.normalPrice) * 100
       )}% OFF</span>
                   }
-                  
                 </p>
                 <p className="text-subtitle-sm md:text-subtitle text-gray-400 line-clamp-2">
                   {product.description}

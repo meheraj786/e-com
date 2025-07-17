@@ -17,9 +17,8 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const [showBar, setShowBar] = useState(true);
-  const cart= useSelector((state)=>state.cart)
-  
-  
+  const cart = useSelector((state) => state.cart);
+
   const navItems = [
     {
       name: "Shop",
@@ -41,11 +40,11 @@ const Navbar = () => {
   const { userLoggedIn, role } = useAuth();
   const signOutHandler = () => {
     signOut(auth);
-    toast.success("SignUp Successfull")
+    toast.success("SignUp Successfull");
   };
   return (
     <>
-    <Toaster position="bottom-right" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
       {showBar && !userLoggedIn && (
         <div className="bar py-[9px] font-secondary text-white bg-black text-center">
           <Container>
@@ -90,10 +89,11 @@ const Navbar = () => {
                 {userLoggedIn && (
                   <Link to="/cart" className="cursor-pointer relative">
                     <FiShoppingCart className="text-[34px] " />
-                    {
-                      cart.length >0 && <span className="text-[12px] absolute -top-4 -right-4 bg-black text-white rounded-full px-2 py-1">{cart.length}</span>
-                    }
-                    
+                    {cart.length > 0 && (
+                      <span className="text-[12px] absolute -top-4 -right-4 bg-black text-white rounded-full px-2 py-1">
+                        {cart.length}
+                      </span>
+                    )}
                   </Link>
                 )}
                 {!userLoggedIn && (
@@ -107,7 +107,7 @@ const Navbar = () => {
                     </Link>
                   </>
                 )}
-                {userLoggedIn && role==='user' && (
+                {userLoggedIn && role === "user" && (
                   <>
                     <button
                       className="text-[16px] cursor-pointer "
@@ -118,18 +118,18 @@ const Navbar = () => {
                     <RxAvatar className="text-[24px]" />
                   </>
                 )}
-                {userLoggedIn && role === "admin" && (<>
-                  <button
+                {userLoggedIn && role === "admin" && (
+                  <>
+                    <button
                       className="text-[16px] cursor-pointer "
                       onClick={signOutHandler}
                     >
                       SignOut
                     </button>
-                  <Link to="/dashboard">
-                    <RxAvatar className="text-[24px] text-red-500" />
-                  </Link>
-                
-                </>
+                    <Link to="/dashboard">
+                      <RxAvatar className="text-[24px] text-red-500" />
+                    </Link>
+                  </>
                 )}
               </Flex>
             </div>
@@ -168,7 +168,9 @@ const Navbar = () => {
                       <Link to="/cart" className="cursor-pointer">
                         <FiShoppingCart className="text-[24px] " />
                       </Link>
-                      <RxAvatar className="text-[24px]" />
+                      <Link to="/userprofile">
+                        <RxAvatar className="text-[24px]" />
+                      </Link>
                     </Flex>
                   </div>
                 </Flex>
@@ -177,7 +179,6 @@ const Navbar = () => {
           </Flex>
         </Container>
       </div>
-
     </>
   );
 };
