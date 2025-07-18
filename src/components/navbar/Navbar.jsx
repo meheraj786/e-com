@@ -115,7 +115,9 @@ const Navbar = () => {
                     >
                       SignOut
                     </button>
+                    <Link to="/userprofile">
                     <RxAvatar className="text-[24px]" />
+                    </Link>
                   </>
                 )}
                 {userLoggedIn && role === "admin" && (

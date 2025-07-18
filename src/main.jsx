@@ -19,6 +19,7 @@ import Layout from './pages/Layout.jsx'
 import ProductListPage from './pages/ProductListPage.jsx'
 import ProductDetailPage from './pages/ProductDetailPage.jsx'
 import UserProfile from './pages/UserProfile.jsx'
+import CheckoutPage from './pages/CheckOutPage.jsx'
 
 const router = createBrowserRouter([
   { path: "/", Component: Layout,
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
         path: "/shop", Component: Shop
       },
       { path: "/cart", element: <PrivateRoute> <Cart/> </PrivateRoute> },
+      { path: "/checkout", element: <PrivateRoute> <CheckoutPage/> </PrivateRoute> },
       { path: "/signup", Component: SignUp },
       { path: "/login", Component: Login },
       { path: "/products", Component: ProductListPage },

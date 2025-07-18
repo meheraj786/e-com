@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }
 
-
   const value = {
     currentUser,
     userLoggedIn,
