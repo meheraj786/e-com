@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Trash2, Minus, Plus } from "lucide-react";
 import { clearCart, modifyQuantityOfAnItem, removeItemFromCart } from "../features/cart";
+import { Link } from "react-router";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const Cart = () => {
   cartItems.forEach((item) => (total += item.price * item.quantity));
   
   const subtotal = total;
-  const discountPercentage = 20;
+  const discountPercentage = 0;
   const discountAmount = subtotal * (discountPercentage / 100);
   const deliveryFee = 15;
   const finalTotal = subtotal - discountAmount + deliveryFee;
@@ -145,6 +146,7 @@ const Cart = () => {
               </div>
 
               {/* Checkout Button */}
+              <Link to="/checkout">
               <button 
                 className="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
                 disabled={cartItems.length === 0}
@@ -152,6 +154,8 @@ const Cart = () => {
                 Go to Checkout
                 <span>→</span>
               </button>
+              
+              </Link>
             </div>
           </div>
         </div>

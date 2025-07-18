@@ -37,6 +37,7 @@ const UserProfile = () => {
   }, [currentUser.uid]);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [recentOrders, setRecentOrders]= useState([])
   const [activeTab, setActiveTab] = useState("overview");
 
 const [userInfo, setUserInfo] = useState({
@@ -63,6 +64,24 @@ useEffect(() => {
   }
 }, [user]);
 
+const getData=async()=>{
+const querySnapshot = await getDocs(collection(db, "orders"));
+let arr=[]
+querySnapshot.forEach((doc) => {
+  if (doc.id) {
+    arr.push({...doc.data(), orderId: doc.id})
+    return arr
+    
+  }
+});
+setRecentOrders(arr)
+}
+useEffect(() => {
+  getData()
+  
+}, [])
+
+
   const handleInputChange = (field, value) => {
     setUserInfo((prev) => ({
       ...prev,
@@ -86,7 +105,6 @@ const handleSave = async () => {
   } catch (error) {
     console.error("Error updating profile:", error);
   }
-  console.log(user);
   
 };
 
@@ -108,26 +126,26 @@ const handleSave = async () => {
     { label: "Points", value: "2,450", color: "bg-gray-900" },
   ];
 
-  const recentOrders = [
-    {
-      id: "#12345",
-      date: "2 days ago",
-      status: "Delivered",
-      amount: "$145.00",
-    },
-    {
-      id: "#12344",
-      date: "1 week ago",
-      status: "Processing",
-      amount: "$89.50",
-    },
-    {
-      id: "#12343",
-      date: "2 weeks ago",
-      status: "Delivered",
-      amount: "$210.00",
-    },
-  ];
+  // const recentOrders = [
+  //   {
+  //     id: "#12345",
+  //     date: "2 days ago",
+  //     status: "Delivered",
+  //     amount: "$145.00",
+  //   },
+  //   {
+  //     id: "#12344",
+  //     date: "1 week ago",
+  //     status: "Processing",
+  //     amount: "$89.50",
+  //   },
+  //   {
+  //     id: "#12343",
+  //     date: "2 weeks ago",
+  //     status: "Delivered",
+  //     amount: "$210.00",
+  //   },
+  // ];
 
   return (
     <div className="min-h-screen bg-gray-50">
