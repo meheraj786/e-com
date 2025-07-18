@@ -68,7 +68,7 @@ const getData=async()=>{
 const querySnapshot = await getDocs(collection(db, "orders"));
 let arr=[]
 querySnapshot.forEach((doc) => {
-  if (doc.id) {
+  if (doc.data().customerId==currentUser.uid) {
     arr.push({...doc.data(), orderId: doc.id})
     return arr
     
@@ -107,6 +107,7 @@ const handleSave = async () => {
   }
   
 };
+console.log(recentOrders);
 
 
   const menuItems = [
@@ -415,15 +416,15 @@ const handleSave = async () => {
                             />
                           </div>
                           <div>
-                            <p className="font-medium text-black">{order.id}</p>
+                            <p className="font-medium text-black">{order.orderId}</p>
                             <p className="text-sm text-gray-600">
-                              {order.date}
+                              {order.date || 22}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
                           <p className="font-medium text-black">
-                            {order.amount}
+                            {order.amount || 2000}
                           </p>
                           <span
                             className={`inline-block px-2 py-1 rounded-full text-xs ${
@@ -432,7 +433,7 @@ const handleSave = async () => {
                                 : "bg-yellow-100 text-yellow-800"
                             }`}
                           >
-                            {order.status}
+                            {order.status || "pending"}
                           </span>
                         </div>
                       </div>
